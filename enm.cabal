@@ -1,0 +1,15 @@
+cabal-version:      2.4
+name:               enm
+version:            0.1.0.0
+homepage:			https://github.com/rendick/enm
+author:             rendick
+maintainer:         rendick123@proton.me
+
+copyright: (c) rendick 
+extra-source-files: CHANGELOG.md
+
+executable enm
+    main-is:          Main.hs
+    build-depends:    base ^>=4.16.4.0
+    hs-source-dirs:   app
+    default-language: Haskell2010
