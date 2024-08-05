@@ -1,31 +1,46 @@
 module Main where
 
-import Commands.Init 
+import Commands.Init
 import Commands.Help
 import Commands.Version
 import Commands.Ls
 
 import System.Environment (getArgs)
 import System.Exit (exitSuccess, exitWith, ExitCode(ExitFailure))
-import System.IO (hFlush, stdout)
+import System.Info (os, arch)
+import Control.Applicative (WrappedArrow(unwrapArrow))
 
 main :: IO ()
-main = getArgs >>= parse >>= putStr . tac
+main = do
+ let supportedOS = ["linux", "linux-android", "mingw32", "darwin", "openbsd", "netbsd"]
+ let supportedArch = ["x86_64", "riscv64", "riscv32", "aarch64", "arm"]
+ if os `elem` supportedOS
+ then do
+  if arch `elem` supportedArch
+  then do
+   args <- getArgs
+   result <- parse args
+   putStrLn $ tac result
+   else do
+    putStrLn $ "You are using " ++ os ++ " instead of " ++ unwords supportedArch
+    return ()
+ else do 
+  putStrLn $ "You are using " ++ os ++ " instead of " ++ unwords supportedOS 
+  return ()
 
 tac :: String -> String
 tac = unlines . reverse . lines
 
 parse :: [String] -> IO String
-parse ["help"] = usage >> exit
-parse ["version"] = version >> exit
-parse ["init"] = inits >> exit
-parse ["ls"] = ls >> exit
-parse [] = usage >> exit
+parse ["help"] = usage >> return ""
+parse ["version"] = version >> return ""
+parse ["init"] = inits >> return ""
+parse ["ls"] = ls >> return ""
+parse [] = usage >> return ""
 parse fs = concat <$> mapM readFile fs
 
 usage :: IO ()
-usage = do
-    mapM_ putStrLn help
+usage = mapM_ putStrLn help
 
 exit :: IO a
 exit = exitSuccess
