@@ -8,6 +8,10 @@ extra-source-files: CHANGELOG.md
 
 executable enm
     main-is:          Main.hs
-    build-depends:    base ^>=4.16.4.0
+    build-depends:    base ^>=4.16.4.0, directory, filepath
     hs-source-dirs:   app
+    other-modules:    Commands.Help
+                      Commands.Init
+                      Commands.Version
+					  Commands.Ls
     default-language: Haskell2010

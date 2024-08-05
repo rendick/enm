@@ -3,6 +3,7 @@ module Main where
 import Commands.Init 
 import Commands.Help
 import Commands.Version
+import Commands.Ls
 
 import System.Environment (getArgs)
 import System.Exit (exitSuccess, exitWith, ExitCode(ExitFailure))
@@ -18,6 +19,7 @@ parse :: [String] -> IO String
 parse ["help"] = usage >> exit
 parse ["version"] = version >> exit
 parse ["init"] = inits >> exit
+parse ["ls"] = ls >> exit
 parse [] = usage >> exit
 parse fs = concat <$> mapM readFile fs
 
