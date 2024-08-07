@@ -4,6 +4,9 @@ import Commands.Init
 import Commands.Help
 import Commands.Version
 import Commands.Ls
+import Commands.Ping
+import Commands.Explore
+import Commands.Check
 
 import System.Environment (getArgs)
 import System.Exit (exitSuccess, exitWith, ExitCode(ExitFailure))
@@ -32,11 +35,14 @@ tac :: String -> String
 tac = unlines . reverse . lines
 
 parse :: [String] -> IO String
-parse ["help"] = usage >> return ""
-parse ["version"] = version >> return ""
-parse ["init"] = inits >> return ""
-parse ["ls"] = ls >> return ""
-parse [] = usage >> return ""
+parse ["help"] = usage >> exit
+parse ["version"] = version >> exit 
+parse ["init"] = inits >> exit
+parse ["ls"] = ls >> exit
+parse ["ping"] = ping >> exit
+parse ["explore"] = explore >> exit
+parse ["check"] = check >> exit
+parse [] = usage >> exit
 parse fs = concat <$> mapM readFile fs
 
 usage :: IO ()
