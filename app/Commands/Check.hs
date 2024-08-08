@@ -1,5 +1,9 @@
 module Commands.Check where
 
-check :: IO()
+import Settings.Config (getConfigValue)
+
+check :: IO ()
 check = do
- putStrLn "sdf"
+  (url, lol) <- getConfigValue
+  putStrLn url
+  putStrLn lol
