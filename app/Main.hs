@@ -7,6 +7,8 @@ import Commands.Init
 import Commands.Ls
 import Commands.Ping
 import Commands.Version
+import Commands.Clean
+
 import Control.Applicative (WrappedArrow (unwrapArrow))
 import System.Environment (getArgs)
 import System.Exit (ExitCode (ExitFailure), exitSuccess, exitWith)
@@ -41,6 +43,7 @@ parse ["ls"] = ls >> exit
 parse ["ping"] = ping >> exit
 parse ["explore"] = explore >> exit
 parse ("check" : pkg : []) = check pkg >> exit
+parse ["clean"] = clean >> exit
 parse [] = usage >> exit
 parse fs = concat <$> mapM readFile fs
 

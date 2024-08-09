@@ -21,4 +21,7 @@ executable enm
                       Commands.Version
 					  Commands.Ls
 					  Commands.Ping
+					  Commands.Clean
+					  Commands.Check
+					  Settings.Config
     default-language: Haskell2010
